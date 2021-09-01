@@ -1,9 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react';
+
 // Import my component.
 import Login from './Views/Login';
+import Home from './Views/Home';
 
+// Firebase components:
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword 
+} from 'firebase/auth';
+
+
+// Bootstrap:
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
@@ -14,8 +25,37 @@ class  App extends Component {
     super (props);
 
     this.state = {
-      view: 'login'
+      view: 'login',
+      userInfo: {
+        auth: null,
+        user: null
+      }
     }
+
+    this.userHandler = this.userHandler.bind(this);
+
+  }
+
+  userHandler(arg) {
+    // Pass as a prop
+
+    let stateUser = {
+      auth: arg.auth,
+      user: arg.user
+    }
+
+    console.log(stateUser);
+
+    this.setState(state => ({
+      view: 'home',
+      userInfo: {
+        auth: arg.auth,
+        user: arg.user
+      }
+    }));
+
+    console.log(this.state.view);
+    console.log(this.state.userInfo);
 
   }
 
@@ -25,8 +65,10 @@ class  App extends Component {
 
     let ui;
 
-    if (this.state.view ==='login') {
-      ui = <Login />
+    if (this.state.view === 'login') {
+      ui = <Login action={this.userHandler}/>
+    } else if (this.state.view === 'home') {
+      ui = <Home />
     }
 
 

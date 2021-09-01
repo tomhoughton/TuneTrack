@@ -43,6 +43,13 @@ class Login extends Component {
 		signInWithEmailAndPassword(this.auth, this.state.email, this.state.password).then((userCredential) => {
 			const user = userCredential.user;
 			console.log(user.email);
+
+			let userInfo = {
+				auth: this.auth,
+				user: user
+			}
+
+			this.props.action(userInfo);
 		})
 		.catch((error) => {
 			const errorCode = error.code;

@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 // Import my component.
 import Login from './Views/Login';
 import Home from './Views/Home';
+import Upload from './Views/Upload';
 
 // Firebase components:
 import { 
@@ -33,6 +34,7 @@ class  App extends Component {
     }
 
     this.userHandler = this.userHandler.bind(this);
+    this.handleUploadClick = this.handleUploadClick.bind(this);
 
   }
 
@@ -59,6 +61,12 @@ class  App extends Component {
 
   }
 
+  handleUploadClick() {
+    this.setState(state => ({
+      view: 'upload'
+    }));
+  }
+
   render() {
 
     document.title = 'Tune Track'
@@ -69,6 +77,8 @@ class  App extends Component {
       ui = <Login action={this.userHandler}/>
     } else if (this.state.view === 'home') {
       ui = <Home />
+    } else if (this.state.view === 'upload') {
+      ui = <Upload />
     }
 
 
@@ -78,7 +88,7 @@ class  App extends Component {
             <Navbar.Brand style={{ color: '#ffffff' }}>Tune Track</Navbar.Brand>
             <Nav className="mr-auto">
               <Button className="navButton" style={{ paddingRight: '5px'}} variant="primary" onClick={this.handleHomeClick}>Home</Button>
-              <Button className="navButton" style={{ paddingRight: '5px' }} variant="primary" onClick={this.handleCompareClick}>Upload</Button>
+              <Button className="navButton" style={{ paddingRight: '5px' }} variant="primary" onClick={this.handleUploadClick}>Upload</Button>
               <Button className="navButton" style={{ paddingRight: '5px' }} variant="info" onClick={this.handleAboutClick}>Account</Button>
               <Button className="navButton" style={{ paddingRight: '5px' }} variant="info" onClick={this.handleSetHomeClick}>About</Button>
             </Nav>

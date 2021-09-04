@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// Import my components:
+import LoginOrSignUp from '../Components/LoginOrSignUp';
+
 // Bootstrap components:
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
@@ -18,7 +21,9 @@ class Login extends Component {
 
 		this.state = {
 			email: '',
-			password: ''
+			password: '',
+			isLogin: false,
+			isLoginOrSignUp: true
 		}
 
 		this.handleSignUpClick = this.handleSignUpClick.bind(this);
@@ -54,52 +59,31 @@ class Login extends Component {
 		.catch((error) => {
 			const errorCode = error.code;
 			const errorMessage = error.message;
-		})
+		});
+	}
+
+	setUserAuthentication(arg) {
+		
 	}
 
 	render () {
+		
+		let ui;
+
+		if (this.state.isLoginOrSignUp) {
+			ui = <LoginOrSignUp action={this.setUserAuthentication}/>
+		} else {
+
+		}
+
 		return (
 			<Container className='my-auto'>
 				<Row>
 					<Col></Col>
 					<Col>
-						<h1>Sign in</h1>
-					</Col>
-					<Col></Col>
-				</Row>
-				<Row>
-					<Col></Col>
-					<Col>
-						<Card>
-							<Form>
-								<Form.Group className='mb-3' controlId='formBasicEmail'>
-									<Form.Label>Email Address</Form.Label>
-									<Form.Control 
-										type='email' 
-										placeholder='Enter email'
-										value={this.state.email}
-										onChange={e => this.setState({ email: e.target.value })}
-										/>
-								</Form.Group>
-								<Form.Group className='mb-3' controlId='formBasicPassword'>
-									<Form.Label>Password</Form.Label>
-									<Form.Control 
-									type='password' 
-									placeholder='Password'
-									value={this.state.password}
-									onChange={e => this.setState({ password: e.target.value})}
-								/>
-								</Form.Group>
-							</Form>
-							<Row>
-								<Col>
-									<Button variant='primary' onClick={this.handleSignInClick}>Sign In</Button>
-								</Col>
-								<Col>
-									<Button variant='secondary' onClick={this.handleSignUpClick}>Sign Up</Button>
-								</Col>
-							</Row>
-						</Card>
+						{
+							ui
+						}
 					</Col>
 					<Col></Col>
 				</Row>
